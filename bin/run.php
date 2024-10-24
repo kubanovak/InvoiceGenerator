@@ -3,14 +3,17 @@
 use App\Builder;
 use App\Renderer;
 
-/*
- * usage:
- *
- * php run.php > invoice.pdf
- *
- */
 
 // TODO use composer autoloader
+
+if($argc !== 2) {
+?>
+usage:
+
+php run.php invoice.pdf
+<?php
+    exit;
+}
 
 $builder = new Builder();
 $invoice = $builder
@@ -18,9 +21,10 @@ $invoice = $builder
     ->setSupplier(
         'Dodavatel Holding a.s.', 'CZ66776677', 'Kratka', "2", 'Brno', '60200', '+420 999 100 999', 'info@d-holding.eu'
     )
-    ->setCustomer('Jan Novak', 'CZ12345678', 'Dlouha', "1", 'Praha', '11000', '+420 977 101 202')
+    ->setCustomer('Jan Novak', 'CZ12345678', 'Dlouha', "1", 'Praha', '11000', null, 'cutomer@testing.cz')
     ->addItem('Zbozi', 15.5, 199.99)
     ->addItem('Sluzby', 1, 98100.57)
     ->build();
 
-echo (new Renderer)->makeInvoice($invoice);
+$source = (new Renderer())->makePdf($invoice);
+file_put_contents($argv[1], $source);

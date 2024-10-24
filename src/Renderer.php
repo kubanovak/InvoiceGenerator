@@ -6,7 +6,11 @@ use Dompdf\Dompdf;
 
 class Renderer extends Dompdf
 {
-    public function makeInvoice(Invoice $invoice): string
+    public function makeHtml(Invoice $invoice): string
+    {
+        // TODO implement
+    }
+    public function makePdf(Invoice $invoice): string
     {
         // TODO implement
     }
