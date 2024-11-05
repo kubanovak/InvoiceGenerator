@@ -14,7 +14,7 @@ class Invoice
     protected BusinessEntity $customer;
 
     /** @var Item[]|array */
-    protected array $items;
+    protected array $items = [];
 
     public function getNumber(): string
     {
@@ -63,8 +63,12 @@ class Invoice
         return $this;
     }
 
-    public function getTotalPrice(): float|int
+    public function getTotalPrice(): float
     {
-        // TODO implement
+        $total = 0.0;
+        foreach ($this->items as $item) {
+            $total += $item->getTotalPrice();
+        }
+        return $total;
     }
 }

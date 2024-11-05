@@ -2,18 +2,27 @@
 
 namespace App;
 
+use App\Invoice\BusinessEntity;
+use App\Invoice\Item;
+
 class Builder
 {
     protected Invoice $invoice;
 
+    public function __construct()
+    {
+        $this->invoice = new Invoice();
+    }
+
     public function build(): Invoice
     {
-        // TODO implement
+        return $this->invoice;
     }
 
     public function setNumber(string $number): self
     {
-        // TODO implement
+        $this->invoice->setNumber($number);
+        return $this;
     }
 
     public function setSupplier(
@@ -25,9 +34,10 @@ class Builder
         string  $zip,
         ?string $phone = null,
         ?string $email = null
-    ): self
-    {
-        // TODO implement
+    ): self {
+        $supplier = new BusinessEntity($name, $vatNumber, $street, $number, $city, $zip, $phone, $email);
+        $this->invoice->setSupplier($supplier);
+        return $this;
     }
 
     public function setCustomer(
@@ -39,13 +49,20 @@ class Builder
         string  $zip,
         ?string $phone = null,
         ?string $email = null
-    ): self
-    {
-        // TODO implement
+    ): self {
+        $customer = new BusinessEntity($name, $vatNumber, $street, $number, $city, $zip, $phone, $email);
+        $this->invoice->setCustomer($customer);
+        return $this;
     }
 
-    public function addItem(string $description, ?float $quantity, ?float $price): self
+    public function addItem(string $description, ?float $quantity = 1.0, ?float $price = 0.0): self
     {
-        // TODO implement
+        $item = new Item();
+        $item->setDescription($description)
+            ->setQuantity($quantity ?? 1.0)
+            ->setUnitPrice($price ?? 0.0);
+
+        $this->invoice->addItem($item);
+        return $this;
     }
 }

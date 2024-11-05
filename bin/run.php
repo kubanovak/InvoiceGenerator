@@ -1,10 +1,9 @@
 <?php declare(strict_types=1);
 
+require_once __DIR__ . '/../vendor/autoload.php'; // Adjust the path as necessary
+
 use App\Builder;
 use App\Renderer;
-
-
-// TODO use composer autoloader
 
 if($argc !== 2) {
 ?>
