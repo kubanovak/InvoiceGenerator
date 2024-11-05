@@ -1,0 +1,20 @@
+{
+    "name": "novak261/hw-05-novak261",
+    "description": "PDF invoice generator",
+    "type": "project",
+    "require": {
+        "dompdf/dompdf": "3.0.0",
+        "phpunit/phpunit": "11.4.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Novak261\\Hw05Novak261\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "kubanovak",
+            "email": "novak261@fit.cvut.cz"
+        }
+    ]
+}
