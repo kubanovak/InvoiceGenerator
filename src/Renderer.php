@@ -9,19 +9,23 @@ class Renderer extends Dompdf
 {
     public function makeHtml(Invoice $invoice): string
     {
-        $supplierContact = $invoice->getSupplier()->getPhone() ? "Tel: " . $invoice->getSupplier()->getPhone() : '';
-        $supplierEmail = $invoice->getSupplier()->getEmail() ? "Email: " . $invoice->getSupplier()->getEmail() : '';
-        $customerEmail = $invoice->getCustomer()->getEmail() ? "Email: " . $invoice->getCustomer()->getEmail() : '';
+        $supplier = $invoice->getSupplier();
+        $customer = $invoice->getCustomer();
+
+        $supplierContact = $supplier->getPhone() ? "Tel: " . $supplier->getPhone() . "<br>" : '';
+        $supplierEmail = $supplier->getEmail() ? "Email: " . $supplier->getEmail() . "<br>" : '';
+        $customerContact = $customer->getPhone() ? "Tel: " . $customer->getPhone() . "<br>" : '';
+        $customerEmail = $customer->getEmail() ? "Email: " . $customer->getEmail() . "<br>" : '';
 
         $itemsHtml = '';
         foreach ($invoice->getItems() as $item) {
             $itemsHtml .= "
-            <tr>
-                <td>{$item->getDescription()}</td>
-                <td class='right-align'>{$item->getQuantity()}</td>
-                <td class='right-align'>" . number_format($item->getUnitPrice(), 2, ',', ' ') . "</td>
-                <td class='right-align'>" . number_format($item->getTotalPrice(), 2, ',', ' ') . "</td>
-            </tr>";
+        <tr>
+            <td>{$item->getDescription()}</td>
+            <td class='right-align'>{$item->getQuantity()}</td>
+            <td class='right-align'>" . number_format($item->getUnitPrice(), 2, ',', ' ') . "</td>
+            <td class='right-align'>" . number_format($item->getTotalPrice(), 2, ',', ' ') . "</td>
+        </tr>";
         }
 
         $totalPrice = number_format($invoice->getTotalPrice(), 2, ',', ' ');
@@ -95,33 +99,31 @@ class Renderer extends Dompdf
     </head>
     <body>
         <div class='invoice-header'>FAKTURA – DOKLAD c. {$invoice->getNumber()}</div>
-            <div class='contact-info-wrapper'>
-                <table class='contact-info'>
-                    <tr>
-                        <td>
-                            <strong>Dodavatel</strong><br>
-                            {$invoice->getSupplier()->getName()}<br>
-                            {$invoice->getSupplier()->getStreet()} {$invoice->getSupplier()->getNumber()}<br>
-                            {$invoice->getSupplier()->getZip()} {$invoice->getSupplier()->getCity()}<br>
-                            <br>
-                            {$invoice->getSupplier()->getVatNumber()}<br>
-                            <br>
-                            {$supplierContact}<br>
-                            {$supplierEmail}
-                        </td>
-                        <td>
-                            <strong>Odberatel</strong><br>
-                            {$invoice->getCustomer()->getName()}<br>
-                            {$invoice->getCustomer()->getStreet()} {$invoice->getCustomer()->getNumber()}<br>
-                            {$invoice->getCustomer()->getCity()} {$invoice->getCustomer()->getZip()}<br>
-                            <br>
-                            {$invoice->getCustomer()->getVatNumber()}<br>
-                            <br>
-                            {$customerEmail}
-                        </td>
-                    </tr>
-                </table>
-            </div>
+        <div class='contact-info-wrapper'>
+            <table class='contact-info'>
+                <tr>
+                    <td>
+                        <strong>Dodavatel</strong><br>
+                        {$supplier->getName()}<br>
+                        {$supplier->getStreet()} {$supplier->getNumber()}<br>
+                        {$supplier->getZip()} {$supplier->getCity()}<br><br>
+                        {$supplier->getVatNumber()}<br><br>
+                        {$supplierContact}
+                        {$supplierEmail}
+                    </td>
+                    <td>
+                        <strong>Odběratel</strong><br>
+                        {$customer->getName()}<br>
+                        {$customer->getStreet()} {$customer->getNumber()}<br>
+                        {$customer->getZip()} {$customer->getCity()}<br><br>
+                        {$customer->getVatNumber()}<br><br>
+                        {$customerContact}
+                        {$customerEmail}
+                    </td>
+                </tr>
+            </table>
+        </div>
+
         <table class='table'>
             <tr>
                 <th>Polozka</th>
@@ -131,7 +133,7 @@ class Renderer extends Dompdf
             </tr>
             {$itemsHtml}
             <tr class='total-row'>
-                <th colspan='3' >Celkem</th>
+                <th colspan='3'>Celkem</th>
                 <td class='right-align'>{$totalPrice}</td>
             </tr>
         </table>
@@ -140,6 +142,7 @@ class Renderer extends Dompdf
 
         return $html;
     }
+
 
     public function makePdf(Invoice $invoice): string
     {
