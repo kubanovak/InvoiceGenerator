@@ -112,7 +112,7 @@ class Renderer extends Dompdf
                         {$supplierEmail}
                     </td>
                     <td>
-                        <strong>Odběratel</strong><br>
+                        <strong>Odberatel</strong><br>
                         {$customer->getName()}<br>
                         {$customer->getStreet()} {$customer->getNumber()}<br>
                         {$customer->getZip()} {$customer->getCity()}<br><br>
