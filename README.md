@@ -12,7 +12,7 @@ Tento projekt slouží k vytváření faktur ve formátu PDF pomocí PHP a kniho
 - **PHPUnit** (11.4.2) – automatické testy.
 
 ## Instalace
-1. Klonujte repozitář:
+1. Naklonujte repozitář:
    ```bash
    git clone https://github.com/kubanovak/InvoiceGenerator.git
    cd InvoiceGenerator
@@ -21,11 +21,6 @@ Tento projekt slouží k vytváření faktur ve formátu PDF pomocí PHP a kniho
    ```bash
    composer install
    ```
-3. Zahrňte autoload:
-   ```php
-   require_once __DIR__ . '/vendor/autoload.php';
-   ```
-
 ## Použití
 1. Upravte skript `bin/run.php`.
 2. Spusťte skript pro generování faktury:
