@@ -3,7 +3,7 @@
 Tento projekt slouží k vytváření faktur ve formátu PDF pomocí PHP a knihovny DomPDF.
 
 ## Funkcionality
-- Generování PDF faktur
+- Generování PDF faktur na základě zadaných dat
 
 ## Technologie
 - **PHP** (7.4+)
@@ -27,11 +27,13 @@ Tento projekt slouží k vytváření faktur ve formátu PDF pomocí PHP a kniho
    ```
 
 ## Použití
-1. Připravte data o faktuře (dodavatel, odběratel, položky).
-2. Použijte třídu `Renderer` pro vytvoření PDF:
+1. Upravte skript `bin/run.php`.
+2. Spusťte skript pro generování faktury:
    ```bash
    php bin/run.php invoice.pdf
    ```
+   - Výsledné PDF bude uloženo do souboru `invoice.pdf`.
+3. Skript `bin/run.php` obsahuje ukázku generování faktury se dvěma položkami a předvyplněnými údaji o dodavateli a odběrateli.
 
 ## Testování
 - Spusťte testy:
@@ -43,3 +45,4 @@ Tento projekt slouží k vytváření faktur ve formátu PDF pomocí PHP a kniho
 - `src/` – třídy pro fakturu a generování PDF.
 - `tests/` – PHPUnit testy.
 - `bin/run.php` – ukázkový spouštěcí skript.
+
